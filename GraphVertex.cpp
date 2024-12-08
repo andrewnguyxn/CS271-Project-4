@@ -45,7 +45,8 @@ GraphVertex<T>::~GraphVertex(){
 // Author: Tri Dang
 // Parameter: none
 // Return: vertex with copied variables
-// Description: Used for copy constructor. Check below.
+// Description: On an existing vertex, assign all of other's member variables into this existing vertex's
+// member variables. 
 //==================================================
 template <typename T>
 GraphVertex<T>& GraphVertex<T>::operator=(const GraphVertex& other){
@@ -75,8 +76,8 @@ GraphVertex<T>& GraphVertex<T>::operator=(const GraphVertex& other){
 // Author: Tri Dang
 // Parameter: none
 // Return: none
-// Description: creates a vertex copying all member variable (deep copy). Parent pointer, p, will use
-// the same pointer as other.
+// Description: Similar to operator= but for a new existing vertex. Creates a new vertex and initialized
+// all member variables equal to other's variables
 //==================================================
 template <typename T>
 GraphVertex<T>::GraphVertex(const GraphVertex& other){
