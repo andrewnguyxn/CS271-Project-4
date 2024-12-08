@@ -45,7 +45,7 @@ void Graph::addEdge(int u, int v) {
 // removeEdge - remove an edge
 void Graph::removeEdge(int u, int v) {
     if (adjacencyList.find(u) == adjacencyList.end()) { // check if the vertex exist
-        throw edge_exception();
+        throw vertex_exception();
     }
     
     vector<int>& neighbors = adjacencyList[u]; 
@@ -89,5 +89,17 @@ void Graph::deleteVertex(int u) {
         if (vertex != neighbors.end()) {
             neighbors.erase(vertex, neighbors.end());
         }
+    }
+}
+
+// print graph for testing
+void Graph::print() const {
+    cout << "Graph adjacency list:" << endl;
+    for (const auto& [vertex, neighbors] : adjacencyList) {
+        cout << vertex << ": ";
+        for (const int& neighbor : neighbors) {
+            cout << neighbor << " ";
+        }
+        cout << endl;
     }
 }

@@ -1,3 +1,6 @@
+#ifndef CUSTOMEXCEPTION_HPP
+#define CUSTOMEXCEPTION_HPP
+
 #include <iostream>
 #include <exception>
 #pragma once
@@ -17,3 +20,5 @@ class vertex_exception: public exception{
             return "Operation failed: No such vertex exists.";
         }
 };
+
+#endif
