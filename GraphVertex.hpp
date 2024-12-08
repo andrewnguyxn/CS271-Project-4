@@ -30,17 +30,17 @@ class GraphVertex {
 private:
 public:
 
-    T value;
-    enum status{ // will try out enum to see their functionality. WORKS LIKE COLOR.
+    T value; // value...what else do you want?
+    enum status{ // will try out enum to see their functionality. WORKS LIKE COLOR. For DFS (and BFS)
         unseen = 0,
         seen = 1,
         done = 2
     };
-    long f;
-    long dt;
-    long d;
-    // the 2 below will act as an array of parents and neighbors
-    vector<GraphVertex*> neighbors; // multiple neighbors
+    long f; // primarily for DFS
+    long d; // for DFS (and BFS)
+    long dt; // is this necessary or are we testing EITHER DFS OR BFS on ONE graph? 
+    // the 2 below will act as an array of multiple parents and neighbors. They're all POINTERS.
+    vector<GraphVertex*> neighbors; // multiple neighbors;
     vector<GraphVertex*> parents; // multiple parents; polygamy is legal
 
 
