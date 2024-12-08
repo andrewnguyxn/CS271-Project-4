@@ -26,7 +26,7 @@ public:
     void deleteVertex(int u);
     void addVertex(int u);
     //unordered_map<int, pair<int, int> > breadthFirstSearch(int s);
-    //unordered_map<int, tuple<int, int, int> > depthFirstSearch(bool sort=false);
+    unordered_map<int, tuple<int, int, int> > depthFirstSearch(bool sort=false);
     //vector<int> getOrdering();
     //static Graph readFromSTDIN();
 

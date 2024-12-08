@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <vector>
 #include <queue>
+#include <iostream>
 #include <stdexcept>
 
 using namespace std;
@@ -73,6 +74,7 @@ void Graph::addVertex(int u) {
 }
 
 // deleteVertex - delete a vertex and all its edges
+
 void Graph::deleteVertex(int u) {
     if (adjacencyList.find(u) == adjacencyList.end()) { // check to see if vertex already exists
         throw vertex_exception();
@@ -103,3 +105,31 @@ void Graph::print() const {
         cout << endl;
     }
 }
+
+
+//=========================================
+// DFS (Depth First Search)
+// Author: Tri Dang
+// Parameter: bool sort
+// Return: the graph
+// Description: Peforms DFS on the specified map, returning the same map with the distance assigned
+// Based off book's algorithm. If sort = true, then check if the graph is DAG.
+// How to check DAG/Cycle: For every finished node, add it into a linked list. The Member "ordered" does
+// NOT need to be a DAG ordered; just returns an order.
+//=========================================
+
+unordered_map<int, tuple<int, int, int> > Graph::depthFirstSearch(bool sort=false);{
+    // DFS 
+    if (sort){
+        //code to find ordering for DAG 
+    }
+}
+
+
+//=========================================
+// read from STDIN
+// Author: Tri Dang
+// Parameter: None. Is an assignment for any graph
+// Return: None. Reassign the graph into an STDIN with n nodes, m edges, and all node-to-node edges
+// Description: Bruh how tf do I  implement this shit lmao.
+//=========================================
