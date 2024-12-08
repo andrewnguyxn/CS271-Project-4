@@ -5,13 +5,20 @@
 #include <iostream>
 #include <unordered_map>
 #include <vector>
+/*
+find (begin, end, value)
+
+*/
 
 using namespace std;
 
 class Graph {
 private:
-    unordered_map<int, vector<int> > adjacencyList;
-    vector<int> sorted;
+    unordered_map<int, vector<int> > adjacencyList; // stores edges
+    vector<int> sorted; // for topological order
+    unordered_map(int, tuple<int, int, int>) DFSresults; // for DFS
+    long finish; // f in textbook
+    long discovery; // d in textbook
 
 public:
     Graph(); // Default constructor
@@ -27,6 +34,7 @@ public:
     void addVertex(int u);
     //unordered_map<int, pair<int, int> > breadthFirstSearch(int s);
     //unordered_map<int, tuple<int, int, int> > depthFirstSearch(bool sort=false);
+    //void DFSvisit(bool sort=false);
     //vector<int> getOrdering();
     //static Graph readFromSTDIN();
 

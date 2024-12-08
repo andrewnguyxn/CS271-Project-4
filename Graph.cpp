@@ -117,12 +117,50 @@ void Graph::print() const {
 // How to check DAG/Cycle: For every finished node, add it into a linked list. The Member "ordered" does
 // NOT need to be a DAG ordered; just returns an order.
 //=========================================
+unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort) {
+    unordered_map<int, tuple<int, int, int>> results; // stores results to return
+    set<int> visited; // keeps track of visited nodes
 
-unordered_map<int, tuple<int, int, int> > Graph::depthFirstSearch(bool sort=false);{
-    // DFS 
-    if (sort){
-        //code to find ordering for DAG 
+    // Iterate through all nodes in the adjacency list
+    for (const auto& node : adjacencyList) {
+        if (visited.find(node.first) == visited.end()) {
+            DFSvisit(node.first, discovery, finish, -1); // Start DFSvisit if not visited
+        }
     }
+
+    // Fill DFSresults with discovery time, finish time, and parent
+    for (const auto& node : adjacencyList) {
+        int u = node.first;
+        results[u] = DFSresults[u];
+    }
+
+    if (sort) {
+    reverse(sorted.begin(), sorted.end()); // Reverse to get topological order
+
+    // Populate the 'ordered' member with topologically sorted vertices
+    ordered = sorted; // Now 'ordered' contains the topological sort
+    }
+
+    return results;
+}
+
+// DFSvisit Method
+void Graph::DFSvisit(int u, long& discovery, long& finish, int parent) {
+    // Mark the discovery time for node u
+    discovery++;
+    DFSresults[u] = make_tuple(discovery, -1, parent); // Store discovery time and parent
+
+    // Visit all unvisited neighbors of u
+    for (int v : adjacencyList[u]) {
+        if (get<0>(DFSresults[v]) == -1) { // Check if v is unvisited
+            DFSvisit(v, discovery, finish, u); // Recursively visit v
+        }
+    }
+
+    // Mark the finish time for node u
+    finish++;
+    // Update the finish time in the DFSresults
+    DFSresults[u] = make_tuple(get<0>(DFSresults[u]), finish, parent);
 }
 
 
