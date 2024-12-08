@@ -37,6 +37,7 @@ public:
         done = 2
     };
     long f;
+    long dt;
     long d;
     // the 2 below will act as an array of parents and neighbors
     vector<GraphVertex*> neighbors; // multiple neighbors
