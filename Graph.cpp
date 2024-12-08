@@ -144,6 +144,50 @@ unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort) {
     return results;
 }
 
+//==============================================================
+// breadthFirstSearch
+// Aisha Barry
+// This function performs Breadth-First Search (BFS) on the graph
+// starting from a specified vertex.
+// PARAMETERS: int s - The starting vertex for BFS.
+// Return value: A map where the key is the vertex ID, and the 
+// value is a pair representing the distance from the source and
+// the parent vertex.
+//==============================================================
+unordered_map<int, pair<int, int>> Graph::breadthFirstSearch(int s) {
+    unordered_map<int, pair<int, int>> bfsResult; // Stores distances and parents
+    unordered_map<int, bool> visited;            // Tracks visited vertices
+    queue<int> q;                                // Queue for BFS
+
+    // Initialize all vertices as unvisited
+    for (auto &node : adjList) {
+        bfsResult[node.first] = {INT_MAX, -1}; // Distance is "infinity," no parent
+        visited[node.first] = false;
+    }
+
+    // Start BFS from the source vertex
+    bfsResult[s].first = 0; // Distance to itself is 0
+    visited[s] = true;
+    q.push(s);
+
+    while (!q.empty()) {
+        int current = q.front();
+        q.pop();
+
+        // Explore all neighbors of the current vertex
+        for (int neighbor : adjList[current]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                bfsResult[neighbor].first = bfsResult[current].first + 1; // Distance
+                bfsResult[neighbor].second = current;                    // Parent
+                q.push(neighbor);
+            }
+        }
+    }
+
+    return bfsResult;
+}
+
 // DFSvisit Method
 void Graph::DFSvisit(int u, long& discovery, long& finish, int parent) {
     // Mark the discovery time for node u
@@ -163,6 +207,18 @@ void Graph::DFSvisit(int u, long& discovery, long& finish, int parent) {
     DFSresults[u] = make_tuple(get<0>(DFSresults[u]), finish, parent);
 }
 
+//==============================================================
+// getOrdering
+// Aisha Barry
+// This function retrieves the ordering of vertices stored in 
+// the 'ordered' member of the graph class. It returns a copy 
+// of this ordering.
+// PARAMETERS: None
+// Return value: A vector containing the ordering of vertices.
+//==============================================================
+vector<int> Graph::getOrdering() {
+    return ordered; // Return a copy of the ordered vertices
+}
 
 //=========================================
 // read from STDIN
