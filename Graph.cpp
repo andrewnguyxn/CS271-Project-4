@@ -6,6 +6,8 @@
 #include <queue>
 #include <iostream>
 #include <stdexcept>
+#include <set>
+#include <algorithm>
 
 using namespace std;
 
@@ -95,16 +97,16 @@ void Graph::deleteVertex(int u) {
 }
 
 // print graph for testing
-void Graph::print() const {
-    cout << "Graph adjacency list:" << endl;
-    for (const auto& [vertex, neighbors] : adjacencyList) {
-        cout << vertex << ": ";
-        for (const int& neighbor : neighbors) {
-            cout << neighbor << " ";
-        }
-        cout << endl;
-    }
-}
+// void Graph::print() const {
+//     cout << "Graph adjacency list:" << endl;
+//     for (const auto& [vertex, neighbors] : adjacencyList) {
+//         cout << vertex << ": ";
+//         for (const int& neighbor : neighbors) {
+//             cout << neighbor << " ";
+//         }
+//         cout << endl;
+//     }
+// }
 
 
 //=========================================
@@ -119,7 +121,7 @@ void Graph::print() const {
 //=========================================
 unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort=false) {
     //initialize DFS by setting time to zero
-    time = 0;
+    long time = 0;
     discovery = time;
     finish = time;
 
@@ -168,7 +170,7 @@ void Graph::DFSvisit(int u, int parent, bool sort=false) {
     }
     time++;
     finish = time;
-    DFSresults[u] = make_tuple(get<0>(DFSresults[u]), finish, parent);
+    DFSresults[u] = make_tuple(get<0>(DFSresults[u]), finish, get<2>(DFSresults[u]));
     // topological sort
     if (sort) {
         sorted.push_back(u); // add node u into sorted for later uses...
@@ -240,28 +242,22 @@ vector<int> Graph::getOrdering() {
 // Return: None. Reassign the graph into an STDIN with n nodes, m edges, and all node-to-node edges
 // Description: Bruh how tf do I  implement this shit lmao.
 //=========================================
-void Graph::readFromSTDIN() {
+Graph Graph::readFromSTDIN() {
     int n, m;
     cin >> n >> m; // Read the number of vertices (n) and edges (m)
     adjacencyList.clear(); // prep for overwrite
 
-    // Read the m edges
-    for (int i = 0; i < m; ++i) {
-        int u, v;
-        cin >> u >> v; // Read an edge (u, v)
+    graph g;
 
-        // Add the edge to the adjacency list (undirected graph)
-        adjacencyList[u].push_back(v);
-        adjacencyList[v].push_back(u);
+    // adding all the vertices
+    for (int i = 0; i <= n; ++i) {
+        g.addVertex(i);
     }
 
-    // FOR TESTING, please comment this out
-    cout << "Graph read from STDIN:\n";
-    for (const auto& node : adjacencyList) {
-        cout << "Vertex " << node.first << ": ";
-        for (int neighbor : node.second) {
-            cout << neighbor << " ";
-        }
-        cout << endl;
+    // adding all the edges
+    for (int i = 0; i < edges; ++i){
+        int u, v;
+        cin >> u >> v;
+        g.addEdge(u, v);
     }
 }

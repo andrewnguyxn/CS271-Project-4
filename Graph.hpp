@@ -20,7 +20,7 @@ private:
     unordered_map<int, tuple<int, int, int>> DFSresults; // for DFS, format: unordered_map< vertex u , tuple< discovery, finish, parent >>
     long finish; // f in textbook
     long discovery; // d in textbook
-    long time; // for f and d
+    long time; // will be kept global here for accurate and consistent finish and discovery time
 
 public:
     Graph(); // Default constructor
@@ -36,7 +36,7 @@ public:
     void addVertex(int u);
     unordered_map<int, pair<int, int> > breadthFirstSearch(int s);
     unordered_map<int, tuple<int, int, int> > depthFirstSearch(bool sort=false);
-    void DFSvisit(int u, long& time, int parent, bool sort=false);
+    void DFSvisit(int u, int parent, bool sort=false);
     vector<int> getOrdering();
     static Graph readFromSTDIN();
 
