@@ -114,17 +114,22 @@ void Graph::print() const {
 // Return: the graph
 // Description: Peforms DFS on the specified map, returning the same map with the distance assigned
 // Based off book's algorithm. If sort = true, then check if the graph is DAG.
-// How to check DAG/Cycle: For every finished node, add it into a linked list. The Member "ordered" does
+// If Sort == true: For every finished node, add it into a linked list (ordered). The Member "ordered" does
 // NOT need to be a DAG ordered; just returns an order.
 //=========================================
-unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort) {
+unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort=false) {
+    //initialize DFS by setting time to zero
+    time = 0;
+    discovery = time;
+    finish = time;
+
     unordered_map<int, tuple<int, int, int>> results; // stores results to return
-    set<int> visited; // keeps track of visited nodes
+    set<int> visited; // keeps track of visited UNIQUE nodes
 
     // Iterate through all nodes in the adjacency list
     for (const auto& node : adjacencyList) {
         if (visited.find(node.first) == visited.end()) {
-            DFSvisit(node.first, discovery, finish, -1); // Start DFSvisit if not visited
+            DFSvisit(node.first, time, -1); // Start DFSvisit if not visited, -1 is no parent YET
         }
     }
 
@@ -135,14 +140,33 @@ unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort) {
     }
 
     if (sort) {
-    reverse(sorted.begin(), sorted.end()); // Reverse to get topological order
-
-    // Populate the 'ordered' member with topologically sorted vertices
-    ordered = sorted; // Now 'ordered' contains the topological sort
+        reverse(sorted.begin(), sorted.end()); // push back makes nodes in sorted as "ascending order in terms of f time"
+        // reversing will show us the start to last (descending order in terms of f time)
+        ordered = sorted;
     }
-
     return results;
 }
+
+// DFSvisit Method
+void Graph::DFSvisit(int u, long& time, int parent, bool sort=false) {
+    time++;
+    discovery = time;
+    DFSresults[u] = make_tuple(discovery, -1, parent); // Store discovery time, parent, and "un-finished" time -1
+    // Visit all unvisited neighbors of u
+    for (int v : adjacencyList[u]) {
+        if (get<0>(DFSresults[v]) == -1) { // Check if v is unvisited
+            DFSvisit(v, time, u); // Recursively visit v
+        }
+    }
+    time++;
+    finish = time;
+    DFSresults[u] = make_tuple(get<0>(DFSresults[u]), finish, parent);
+    // topological sort
+    if (sort) {
+        sorted.push_back(u); // add node u into sorted for later uses...
+    }
+}
+
 
 //==============================================================
 // breadthFirstSearch
@@ -186,25 +210,6 @@ unordered_map<int, pair<int, int>> Graph::breadthFirstSearch(int s) {
     }
 
     return bfsResult;
-}
-
-// DFSvisit Method
-void Graph::DFSvisit(int u, long& discovery, long& finish, int parent) {
-    // Mark the discovery time for node u
-    discovery++;
-    DFSresults[u] = make_tuple(discovery, -1, parent); // Store discovery time and parent
-
-    // Visit all unvisited neighbors of u
-    for (int v : adjacencyList[u]) {
-        if (get<0>(DFSresults[v]) == -1) { // Check if v is unvisited
-            DFSvisit(v, discovery, finish, u); // Recursively visit v
-        }
-    }
-
-    // Mark the finish time for node u
-    finish++;
-    // Update the finish time in the DFSresults
-    DFSresults[u] = make_tuple(get<0>(DFSresults[u]), finish, parent);
 }
 
 //==============================================================

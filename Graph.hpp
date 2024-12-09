@@ -16,9 +16,12 @@ class Graph {
 private:
     unordered_map<int, vector<int> > adjacencyList; // stores edges
     vector<int> sorted; // for topological order
-    unordered_map(int, tuple<int, int, int>) DFSresults; // for DFS
+    vector<int> ordered; // final topological order
+    unordered_map<int, tuple<int, int, int>> DFSresults; // for DFS
+    //format: unordered_map< vertex u , tuple< discovery, finish, parent >>
     long finish; // f in textbook
     long discovery; // d in textbook
+    long time; // for f and d
 
 public:
     Graph(); // Default constructor
@@ -32,11 +35,11 @@ public:
     bool edgeIn(int u, int v);
     void deleteVertex(int u);
     void addVertex(int u);
-    //unordered_map<int, pair<int, int> > breadthFirstSearch(int s);
-    //unordered_map<int, tuple<int, int, int> > depthFirstSearch(bool sort=false);
-    //void DFSvisit(bool sort=false);
-    //vector<int> getOrdering();
-    //static Graph readFromSTDIN();
+    unordered_map<int, pair<int, int> > breadthFirstSearch(int s);
+    unordered_map<int, tuple<int, int, int> > depthFirstSearch(bool sort=false);
+    void DFSvisit(bool sort=false);
+    vector<int> getOrdering();
+    static Graph readFromSTDIN();
 
     // Additional helper methods as needed
     void print() const;
