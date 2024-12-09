@@ -34,7 +34,7 @@ public:
     bool edgeIn(int u, int v);
     void deleteVertex(int u);
     void addVertex(int u);
-    unordered_map<int, pair<int, int> > breadthFirstSearch(int s);
+    //unordered_map<int, pair<int, int> > breadthFirstSearch(int s);
     unordered_map<int, tuple<int, int, int> > depthFirstSearch(bool sort=false);
     void DFSvisit(int u, int parent, bool sort=false);
     vector<int> getOrdering();

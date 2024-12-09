@@ -119,7 +119,7 @@ void Graph::deleteVertex(int u) {
 // If Sort == true: For every finished node, add it into a linked list (ordered). The Member "ordered" does
 // NOT need to be a DAG ordered; just returns an order.
 //=========================================
-unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort=false) {
+unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort) {
     //initialize DFS by setting time to zero
     long time = 0;
     discovery = time;
@@ -158,7 +158,7 @@ unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort=false
 // fully visit a neighboring node's path to fill in discovery and finish time.
 // Sort == true: store finished node into sorted for topological sort.
 //=========================================
-void Graph::DFSvisit(int u, int parent, bool sort=false) {
+void Graph::DFSvisit(int u, int parent, bool sort) {
     time++;
     discovery = time;
     DFSresults[u] = make_tuple(discovery, -1, parent); // Store discovery time, parent, and "un-finished" time -1
@@ -178,49 +178,49 @@ void Graph::DFSvisit(int u, int parent, bool sort=false) {
 }
 
 
-//==============================================================
-// breadthFirstSearch
-// Aisha Barry
-// This function performs Breadth-First Search (BFS) on the graph
-// starting from a specified vertex.
-// PARAMETERS: int s - The starting vertex for BFS.
-// Return value: A map where the key is the vertex ID, and the 
-// value is a pair representing the distance from the source and
-// the parent vertex.
-//==============================================================
-unordered_map<int, pair<int, int>> Graph::breadthFirstSearch(int s) {
-    unordered_map<int, pair<int, int>> bfsResult; // Stores distances and parents
-    unordered_map<int, bool> visited;            // Tracks visited vertices
-    queue<int> q;                                // Queue for BFS
+// //==============================================================
+// // breadthFirstSearch
+// // Aisha Barry
+// // This function performs Breadth-First Search (BFS) on the graph
+// // starting from a specified vertex.
+// // PARAMETERS: int s - The starting vertex for BFS.
+// // Return value: A map where the key is the vertex ID, and the 
+// // value is a pair representing the distance from the source and
+// // the parent vertex.
+// //==============================================================
+// unordered_map<int, pair<int, int>> Graph::breadthFirstSearch(int s) {
+//     unordered_map<int, pair<int, int>> bfsResult; // Stores distances and parents
+//     unordered_map<int, bool> visited;            // Tracks visited vertices
+//     queue<int> q;                                // Queue for BFS
 
-    // Initialize all vertices as unvisited
-    for (auto &node : adjList) {
-        bfsResult[node.first] = {INT_MAX, -1}; // Distance is "infinity," no parent
-        visited[node.first] = false;
-    }
+//     // Initialize all vertices as unvisited
+//     for (auto &node : adjList) {
+//         bfsResult[node.first] = {INT_MAX, -1}; // Distance is "infinity," no parent
+//         visited[node.first] = false;
+//     }
 
-    // Start BFS from the source vertex
-    bfsResult[s].first = 0; // Distance to itself is 0
-    visited[s] = true;
-    q.push(s);
+//     // Start BFS from the source vertex
+//     bfsResult[s].first = 0; // Distance to itself is 0
+//     visited[s] = true;
+//     q.push(s);
 
-    while (!q.empty()) {
-        int current = q.front();
-        q.pop();
+//     while (!q.empty()) {
+//         int current = q.front();
+//         q.pop();
 
-        // Explore all neighbors of the current vertex
-        for (int neighbor : adjList[current]) {
-            if (!visited[neighbor]) {
-                visited[neighbor] = true;
-                bfsResult[neighbor].first = bfsResult[current].first + 1; // Distance
-                bfsResult[neighbor].second = current;                    // Parent
-                q.push(neighbor);
-            }
-        }
-    }
+//         // Explore all neighbors of the current vertex
+//         for (int neighbor : adjList[current]) {
+//             if (!visited[neighbor]) {
+//                 visited[neighbor] = true;
+//                 bfsResult[neighbor].first = bfsResult[current].first + 1; // Distance
+//                 bfsResult[neighbor].second = current;                    // Parent
+//                 q.push(neighbor);
+//             }
+//         }
+//     }
 
-    return bfsResult;
-}
+//     return bfsResult;
+// }
 
 //==============================================================
 // getOrdering
@@ -245,9 +245,8 @@ vector<int> Graph::getOrdering() {
 Graph Graph::readFromSTDIN() {
     int n, m;
     cin >> n >> m; // Read the number of vertices (n) and edges (m)
-    adjacencyList.clear(); // prep for overwrite
 
-    graph g;
+    Graph g;
 
     // adding all the vertices
     for (int i = 0; i <= n; ++i) {
@@ -255,9 +254,10 @@ Graph Graph::readFromSTDIN() {
     }
 
     // adding all the edges
-    for (int i = 0; i < edges; ++i){
+    for (int i = 0; i <= m; ++i){
         int u, v;
         cin >> u >> v;
         g.addEdge(u, v);
     }
+    return (g);
 }
