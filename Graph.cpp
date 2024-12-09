@@ -129,7 +129,7 @@ unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort=false
     // Iterate through all nodes in the adjacency list
     for (const auto& node : adjacencyList) {
         if (visited.find(node.first) == visited.end()) {
-            DFSvisit(node.first, time, -1); // Start DFSvisit if not visited, -1 is no parent YET
+            DFSvisit(node.first, -1); // Start DFSvisit if not visited, -1 is no parent YET
         }
     }
 
@@ -147,15 +147,23 @@ unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort=false
     return results;
 }
 
-// DFSvisit Method
-void Graph::DFSvisit(int u, long& time, int parent, bool sort=false) {
+//=========================================
+// DFS-visit
+// Author: Tri Dang
+// Parameter: node u, parent, and bool sort
+// Return: None
+// Description: Part of the DFS algorithm in the textbook
+// fully visit a neighboring node's path to fill in discovery and finish time.
+// Sort == true: store finished node into sorted for topological sort.
+//=========================================
+void Graph::DFSvisit(int u, int parent, bool sort=false) {
     time++;
     discovery = time;
     DFSresults[u] = make_tuple(discovery, -1, parent); // Store discovery time, parent, and "un-finished" time -1
     // Visit all unvisited neighbors of u
     for (int v : adjacencyList[u]) {
         if (get<0>(DFSresults[v]) == -1) { // Check if v is unvisited
-            DFSvisit(v, time, u); // Recursively visit v
+            DFSvisit(v, u); // Recursively visit v
         }
     }
     time++;
@@ -232,3 +240,28 @@ vector<int> Graph::getOrdering() {
 // Return: None. Reassign the graph into an STDIN with n nodes, m edges, and all node-to-node edges
 // Description: Bruh how tf do I  implement this shit lmao.
 //=========================================
+void Graph::readFromSTDIN() {
+    int n, m;
+    cin >> n >> m; // Read the number of vertices (n) and edges (m)
+    adjacencyList.clear(); // prep for overwrite
+
+    // Read the m edges
+    for (int i = 0; i < m; ++i) {
+        int u, v;
+        cin >> u >> v; // Read an edge (u, v)
+
+        // Add the edge to the adjacency list (undirected graph)
+        adjacencyList[u].push_back(v);
+        adjacencyList[v].push_back(u);
+    }
+
+    // FOR TESTING, please comment this out
+    cout << "Graph read from STDIN:\n";
+    for (const auto& node : adjacencyList) {
+        cout << "Vertex " << node.first << ": ";
+        for (int neighbor : node.second) {
+            cout << neighbor << " ";
+        }
+        cout << endl;
+    }
+}
