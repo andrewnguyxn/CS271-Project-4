@@ -17,9 +17,27 @@ int main() {
 
     g.removeEdge(3,1);
 
+    auto result = g.depthFirstSearch(true);
+
+    cout << "DFS Results:" << endl;
+    for (const auto& [vertex, info] : result) {
+        cout << "Vertex: " << vertex
+             << ", Discovery: " << get<0>(info)
+             << ", Finish: " << get<1>(info)
+             << ", Parent: " << get<2>(info) << endl;
+    }
+
+    // Print topological order
+    cout << "Topological Order:" << endl;
+    for (int v : g.getOrdering()) {
+        cout << v << " ";
+    }
+    cout << endl;
 
 
-    g.print();
+
+
+    //g.print();
 
     return 0;
 }
