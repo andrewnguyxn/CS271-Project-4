@@ -40,9 +40,6 @@ public:
     void DFSvisit(int u, int parent, set<int> visited, bool sort=false);
     vector<int> getOrdering();
     static Graph readFromSTDIN();
-
-    // Additional helper methods as needed
-    void print() const;
 };
 // Add other methods similarly
 

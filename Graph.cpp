@@ -12,25 +12,50 @@
 
 using namespace std;
 
-// Default constructor
+//=========================================
+// Graph Construction
+// Author: Andrew Nguyen
+// Parameter: None
+// Return: None, graph is created
+// Description: Constructs a graph with no nodes
+//=========================================
 Graph::Graph() {
     adjacencyList.clear();
     sorted.clear();
 }
 
-// Destructor
+
+//=========================================
+// Graph Destructor
+// Author: Andrew Nguyen
+// Parameter: none, graph calls this
+// Return: None
+// Description: Deallocate graph and deletes it
+//=========================================
 Graph::~Graph() {
     adjacencyList.clear();
     sorted.clear();
 }
 
-// deep copy
+//=========================================
+// Copy Constructor
+// Author: Andrew Nguyen
+// Parameter: "other" graph
+// Return: None, new graph is constructed with same attributes as other
+// Description: construct a new graph that holds the same nodes and properties as other
+//=========================================
 Graph::Graph(const Graph& other) {
     adjacencyList = other.adjacencyList; 
     sorted = other.sorted;              
 }
 
-// assignment operator
+//=========================================
+// Operator = 
+// Author: Andrew Nguyen
+// Parameter: "other" graph
+// Return: the graph that called this
+// Description: Similar to copy constructor except overwrite called graph with other's attributes
+//=========================================
 Graph& Graph::operator=(const Graph& other) {
     if (this != &other) { 
         adjacencyList = other.adjacencyList; 
@@ -39,14 +64,26 @@ Graph& Graph::operator=(const Graph& other) {
     return *this; 
 }
 
-// addEdge
+//=========================================
+// Add Edge
+// Author: Andrew Nguyen
+// Parameter: node u, node v
+// Return: none
+// Description: add an edge that goes from node u to node v. This is done by adding v into u's adjacencyList 
+//=========================================
 void Graph::addEdge(int u, int v) {
     if (find(adjacencyList[u].begin(), adjacencyList[u].end(), v) == adjacencyList[u].end()) { // check if the edge already exist
         adjacencyList[u].push_back(v); // put vertex to the back of adj list
     }
 }
 
-// removeEdge - remove an edge
+//=========================================
+// Remove Edge
+// Author: Andrew Nguyen
+// Parameter: node u, node v
+// Return: none
+// Description: Deletes a specified edge from node u to v. 
+//=========================================
 void Graph::removeEdge(int u, int v) {
     if (adjacencyList.find(u) == adjacencyList.end()) { // check if the vertex exist
         throw vertex_exception();
@@ -63,12 +100,24 @@ void Graph::removeEdge(int u, int v) {
     }
 }
 
-// edgeIn - return whether an edge is in the graph or not
+//=========================================
+// edge in
+// Author: Andrew Nguyen 
+// Parameter: node u, node v
+// Return: bool (is there an edge from node u to v)
+// Description: Check if there's v in adjacencyList of u, if so, return true. False otherwise
+//=========================================
 bool Graph::edgeIn(int u, int v) {
     return find(adjacencyList[u].begin(), adjacencyList[u].end(), v) != adjacencyList[u].end();
 }
 
-// addVertex - add new vertex 
+//=========================================
+// add Vertex
+// Author: Andrew Nguyen
+// Parameter: node u 
+// Return: none
+// Description: add a vertex u. 
+//=========================================
 void Graph::addVertex(int u) {
     if (adjacencyList.find(u) != adjacencyList.end()) { // check if vertex already exists
         throw vertex_exception();
@@ -76,8 +125,13 @@ void Graph::addVertex(int u) {
     adjacencyList[u] = vector<int>();
 }
 
-// deleteVertex - delete a vertex and all its edges
-
+//=========================================
+// delete Vertex
+// Author: Andrew Nguyen
+// Parameter: node u
+// Return: none
+// Description: Delete vertex x and all its existing edges associated with it 
+//=========================================
 void Graph::deleteVertex(int u) {
     if (adjacencyList.find(u) == adjacencyList.end()) { // check to see if vertex already exists
         throw vertex_exception();
@@ -96,19 +150,6 @@ void Graph::deleteVertex(int u) {
         }
     }
 }
-
-// print graph for testing
-// void Graph::print() const {
-//     cout << "Graph adjacency list:" << endl;
-//     for (const auto& [vertex, neighbors] : adjacencyList) {
-//         cout << vertex << ": ";
-//         for (const int& neighbor : neighbors) {
-//             cout << neighbor << " ";
-//         }
-//         cout << endl;
-//     }
-// }
-
 
 //=========================================
 // DFS (Depth First Search)
