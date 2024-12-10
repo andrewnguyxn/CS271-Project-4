@@ -214,7 +214,7 @@ void test_BFS() {
     cout << "BFS Results:" << endl;
     for (const auto& [vertex, info] : result) {
         cout << "Vertex: " << vertex
-             << "Distance: " << get<0>(info)
+             << ", Distance: " << get<0>(info)
              << ", Parent: " << get<1>(info) << endl;
     }
 
