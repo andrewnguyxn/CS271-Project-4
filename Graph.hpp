@@ -1,3 +1,9 @@
+//=========================================
+// Graph.hpp
+// Date: 12/6/2024
+// Author: Tri Dang, Andrew Nguyen, Aisha Barry
+// Description: Declaration of all functions and variables for graph
+//=========================================
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 

@@ -1,3 +1,8 @@
+//=========================================
+// mytests.cpp
+// Author: Tri Dang, Andrew Nguyen, Aisha Barry
+// Description: Implementations of all class Graph's variable and functions.
+//=========================================
 #include <tuple>
 #include "Graph.hpp"
 #include "customexceptions.hpp" 
@@ -289,7 +294,7 @@ vector<int> Graph::getOrdering() {
 // Author: Tri Dang
 // Parameter: None. Is an assignment for any graph
 // Return: None. Reassign the graph into an STDIN with n nodes, m edges, and all node-to-node edges
-// Description: Bruh how tf do I  implement this shit lmao.
+// Description: Prompts user to fill out a map in the terminal.
 //=========================================
 Graph Graph::readFromSTDIN() {
     int n, m;
@@ -298,12 +303,12 @@ Graph Graph::readFromSTDIN() {
     Graph g;
 
     // adding all the vertices
-    for (int i = 0; i <= n; ++i) {
+    for (int i = i; i <= n; ++i) {
         g.addVertex(i);
     }
 
     // adding all the edges
-    for (int i = 0; i <= m; ++i){
+    for (int i = 0; i < m; ++i){
         int u, v;
         cin >> u >> v;
         g.addEdge(u, v);
