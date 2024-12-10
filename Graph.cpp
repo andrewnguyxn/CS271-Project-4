@@ -122,7 +122,7 @@ void Graph::deleteVertex(int u) {
 //=========================================
 unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort) {
     //initialize DFS by setting time to zero
-    long time = 0;
+    time = 0;
     discovery = time;
     finish = time;
 
@@ -137,7 +137,6 @@ unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort) {
     for (const auto& node : adjacencyList) {
         if (visited.find(node.first) == visited.end() && get<1>(DFSresults[node.first]) == -1) {
             visited.insert(node.first);
-            cout << "Node visiting: " << node.first << endl;
             DFSvisit(node.first, -1, visited, sort); // Start DFSvisit if not visited, -1 is no parent YET
         }
     }
@@ -168,22 +167,17 @@ unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort) {
 void Graph::DFSvisit(int u, int parent, set<int> visited, bool sort) {
     time++;
     discovery = time;
-    cout << "Time and discovery: " << time << " " << discovery << endl;
     DFSresults[u] = make_tuple(discovery, -1, parent); // Store discovery time, parent, and "un-finished" time -1
     
     // Visit all unvisited neighbors of u
     for (int v : adjacencyList[u]) {  // Iterate over neighbors of the current node u
     if (visited.find(v) == visited.end() && get<0>(DFSresults[v]) == -1) { // If neighbor is unvisited
-            cout << "DFSresults[v]: " << get<0>(DFSresults[v]) << endl;
-            cout << "v: " << v << endl;
-            cout << "u: " << u << endl;
         DFSvisit(v, u, visited, sort);  // Recursively visit the neighbor
         }
     }
 
     time++;
     finish = time;
-    cout << "Finish time: " << finish << " for node: " << u << endl;
     DFSresults[u] = make_tuple(get<0>(DFSresults[u]), finish, get<2>(DFSresults[u]));
     // topological sort
     if (sort) {
