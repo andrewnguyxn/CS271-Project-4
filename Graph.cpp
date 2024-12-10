@@ -167,6 +167,9 @@ void Graph::deleteVertex(int u) {
 // NOT need to be a DAG ordered; just returns an order.
 //=========================================
 unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort) {
+    if (adjacencyList.empty()){
+        throw empty_graph();
+    }
     //initialize DFS by setting time to zero
     time = 0;
     discovery = time;
@@ -243,6 +246,9 @@ void Graph::DFSvisit(int u, int parent, set<int> visited, bool sort) {
 // the parent vertex.
 //==============================================================
 unordered_map<int, pair<int, int>> Graph::breadthFirstSearch(int s) {
+    if (adjacencyList.empty()){
+        throw empty_graph();
+    }
     unordered_map<int, pair<int, int>> bfsResult; // Stores distances and parents
     unordered_map<int, bool> visited;            // Tracks visited vertices
     queue<int> q;                                // Queue for BFS

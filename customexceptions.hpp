@@ -21,4 +21,11 @@ class vertex_exception: public exception{
         }
 };
 
+class empty_graph: public exception{
+    public:
+        const char* what() const noexcept override{
+            return "Operation failed: This graph is empty!";
+        }
+};
+
 #endif

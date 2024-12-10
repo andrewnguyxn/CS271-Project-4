@@ -236,7 +236,6 @@ int main() {
 
     cout << "Total tests passed:" << testPassed << endl;
     cout << "Total tests failed:" << testFailed << endl;
-
     return 0;
 }
 
