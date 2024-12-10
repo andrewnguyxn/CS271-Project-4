@@ -6,6 +6,7 @@
 #include <queue>
 #include <iostream>
 #include <stdexcept>
+#include <climits>
 #include <set>
 #include <algorithm>
 
@@ -136,6 +137,7 @@ unordered_map<int, tuple<int, int, int>> Graph::depthFirstSearch(bool sort) {
     for (const auto& node : adjacencyList) {
         if (visited.find(node.first) == visited.end() && get<1>(DFSresults[node.first]) == -1) {
             visited.insert(node.first);
+            cout << "Node visiting: " << node.first << endl;
             DFSvisit(node.first, -1, visited, sort); // Start DFSvisit if not visited, -1 is no parent YET
         }
     }
@@ -206,7 +208,7 @@ unordered_map<int, pair<int, int>> Graph::breadthFirstSearch(int s) {
     queue<int> q;                                // Queue for BFS
 
     // Initialize all vertices as unvisited
-    for (auto &node : AdjacencyList) {
+    for (auto &node : adjacencyList) {
         bfsResult[node.first] = {INT_MAX, -1}; // Distance is "infinity," no parent
         visited[node.first] = false;
     }
@@ -221,7 +223,7 @@ unordered_map<int, pair<int, int>> Graph::breadthFirstSearch(int s) {
         q.pop();
 
         // Explore all neighbors of the current vertex
-        for (int neighbor : AdjacencyList[current]) {
+        for (int neighbor : adjacencyList[current]) {
             if (!visited[neighbor]) {
                 visited[neighbor] = true;
                 bfsResult[neighbor].first = bfsResult[current].first + 1; // Distance
