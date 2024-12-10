@@ -194,7 +194,7 @@ void Graph::DFSvisit(int u, int parent, bool sort) {
 //     queue<int> q;                                // Queue for BFS
 
 //     // Initialize all vertices as unvisited
-//     for (auto &node : adjList) {
+//     for (auto &node : AdjacencyList) {
 //         bfsResult[node.first] = {INT_MAX, -1}; // Distance is "infinity," no parent
 //         visited[node.first] = false;
 //     }
@@ -209,7 +209,7 @@ void Graph::DFSvisit(int u, int parent, bool sort) {
 //         q.pop();
 
 //         // Explore all neighbors of the current vertex
-//         for (int neighbor : adjList[current]) {
+//         for (int neighbor : AdjacencyList[current]) {
 //             if (!visited[neighbor]) {
 //                 visited[neighbor] = true;
 //                 bfsResult[neighbor].first = bfsResult[current].first + 1; // Distance
